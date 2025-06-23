@@ -5,15 +5,14 @@ from engine import train_one_epoch, eval_model
 from utils import save_model, EarlyStopping
 
 # Config
-train_dir = 'data/PlantVillage/train'
-val_dir = 'data/PlantVillage/val'
+data_dir = 'data/PlantVillage'
 batch_size = 32
 num_epochs = 10
 lr = 1e-4
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load data
-train_loader, val_loader, num_classes = create_dataloaders(train_dir, val_dir, batch_size)
+train_loader, val_loader, num_classes = create_dataloaders(data_dir=data_dir, val_split=0.2, batch_size=batch_size)
 
 # Load model
 model = create_model(num_classes=num_classes, freeze_features=True).to(device)
@@ -40,5 +39,5 @@ for epoch in range(num_epochs):
         print("⚠️ Early stopping triggered.")
         break
 
-# Save final model
+# Save final model 
 save_model(model, "models", "resnet50_plant_disease.pth")

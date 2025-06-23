@@ -1,20 +1,24 @@
 from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 
-def create_dataloaders(train_dir, val_dir, batch_size=32, num_workers=2):
+def create_dataloaders(data_dir, batch_size=32, val_split=0.2):
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406],
                              [0.229, 0.224, 0.225])
-    ])
+    ]) 
 
-    train_data = datasets.ImageFolder(train_dir, transform=transform)
-    val_data = datasets.ImageFolder(val_dir, transform=transform)
+    # Load full dataset
+    full_dataset = datasets.ImageFolder(root=data_dir, transform=transform)
+    class_names = full_dataset.classes
+    total_size = len(full_dataset)
+    val_size = int(val_split * total_size)
+    train_size = total_size - val_size
 
-    train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True,
-                              num_workers=num_workers, pin_memory=True)
-    val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False,
-                            num_workers=num_workers, pin_memory=True)
+    train_dataset, val_dataset = random_split(full_dataset, [train_size, val_size])
 
-    return train_loader, val_loader, len(train_data.classes)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
+
+    return train_loader, val_loader, len(class_names)

@@ -34,6 +34,7 @@ pip install torch torchvision pillow tqdm
   * Directly download zip of the dataset from [PlantVillage - Kaggle](https://www.kaggle.com/emmarex/plantdisease)
   * unzip and paste 15 directories under unzipped directory (sometimes 15 dir are child of dir in unzipped dir🥲).
 
+
 ## 🏋️ Training the Model
 
 Edit `train.py` if needed, then run:
@@ -41,6 +42,8 @@ Edit `train.py` if needed, then run:
 ```bash
 python train.py
 ```
+Or you can directly run `colab_notebook.ipynb` on Google colab.
+Just update `MODEL_DIR` with your drive dir wherever you want to save the model.
 
 * Uses ResNet-50 with frozen base layers
 * Random 80-20 train-validation split
@@ -50,6 +53,7 @@ python train.py
 
 ## 🔍 Inference on a Single Image
 
+  * Download and save model from drive if trained on Colab else follow following
   * Update `model_path`, `image_path`, `dataset_dir` in the `inference.py` file and then run following command 
 ```bash
 python inference.py

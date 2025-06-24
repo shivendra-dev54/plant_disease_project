@@ -31,23 +31,8 @@ pip install torch torchvision pillow tqdm
 
 ### 2. Download Dataset from Kaggle
 
-1. Go to [https://www.kaggle.com/emmarex/plantdisease](https://www.kaggle.com/emmarex/plantdisease)
-2. Download `kaggle.json` from your Kaggle account settings
-3. In your project or Colab:
-
-```python
-from google.colab import files
-files.upload()  # Upload kaggle.json
-
-!mkdir -p ~/.kaggle
-!cp kaggle.json ~/.kaggle/
-!chmod 600 ~/.kaggle/kaggle.json
-
-!kaggle datasets download -d emmarex/plantdisease
-!unzip -q plantdisease.zip -d data/
-```
-
----
+  * Directly download zip of the dataset from [PlantVillage - Kaggle](https://www.kaggle.com/emmarex/plantdisease)
+  * unzip and paste 15 directories under unzipped directory (sometimes 15 dir are child of dir in unzipped dir🥲).
 
 ## 🏋️ Training the Model
 
@@ -65,11 +50,9 @@ python train.py
 
 ## 🔍 Inference on a Single Image
 
+  * Update `model_path`, `image_path`, `dataset_dir` in the `inference.py` file and then run following command 
 ```bash
-python inference.py \
-  --model_path saved_models/resnet50_plant_disease.pth \
-  --image_path path/to/image.jpg \
-  --class_map saved_models/class_names.json
+python inference.py
 ```
 
 Returns predicted class and confidence.
@@ -91,9 +74,8 @@ Returns predicted class and confidence.
 ## 📈 Future Improvements
 
 * Support batch inference
-* Add visualization utilities (e.g., Grad-CAM)
+* Add visualization utilities
 * Add CLI training arguments
-* Use Weights & Biases or TensorBoard for logging
 
 ---
 
@@ -108,4 +90,4 @@ Returns predicted class and confidence.
 ## 📌 Author
 
 **Shivendra**
-Feel free to connect with me on [LinkedIn](https://www.linkedin.com/)!
+Feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/shivendra-devadhe-97017a327/)!

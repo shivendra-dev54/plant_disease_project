@@ -7,7 +7,7 @@ from PIL import Image
 import os
 
 def create_model(num_classes, freeze_features=True):
-    model = models.resnet50(pretrained=False)  # pretrained=False since we load weights
+    model = models.resnet50(pretrained=False)
     if freeze_features:
         for param in model.parameters():
             param.requires_grad = False
